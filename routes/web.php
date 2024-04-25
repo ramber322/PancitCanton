@@ -8,6 +8,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+Route::get('logout', function () {
+    return view('login');
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -20,5 +26,11 @@ Route::middleware('auth')->group(function () {
 
 
 route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
+
+
+Route::get('admin/users', function () {
+    return view('admin/users');})->middleware(['auth','admin']);
+
+
 
 require __DIR__.'/auth.php';
