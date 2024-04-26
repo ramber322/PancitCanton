@@ -115,15 +115,7 @@
 <body>
 
 <div class="container">
-<form method="POST" action="{{ route('logout') }}">
-                    @csrf
 
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
   
   <div class="top-section">
   
@@ -214,10 +206,17 @@
   <div class ="popoverdiv" style ="justify-content: Center; align-items: center; background: black; border: 3px solid black; width: 200px;">
      
 	 <a class="popover-link" href="">INFO</a><br>
-   
+     </x-responsive-nav-link>
 
-    
+<!-- Authentication -->
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
 
+    <x-responsive-nav-link :href="route('logout')"
+            onclick="event.preventDefault();
+                        this.closest('form').submit();">
+        {{ __('Log Out') }}
+    </x-responsive-nav-link>
 	 </div>
   </div>
   <!-- Bootstrap JS -->

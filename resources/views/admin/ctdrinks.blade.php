@@ -1,13 +1,15 @@
 @extends('layouts.AdminDashboardLayout')
 
+
 @section('content')
 
-@foreach($products as $product)
+@foreach($drinks as $product)
 <div class="productdisplay">
-        <img src="{{ asset('assets/images/burger_transparent.png') }}">
+        <img  src="{{ asset('assets/images/soda_transparent.png') }}">
         <p>{{ $product->Product_Name }}</p>
         <p>{{ $product->Price }}</p>
     </div>
     @endforeach
+
 
 @endsection

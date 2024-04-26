@@ -18,9 +18,8 @@ class Admin
     {
 
         if(Auth::user()->role != 'admin'){
-            return redirect ('/');
+            return redirect ('login');
         }
-
 
         return $next($request);
     }
