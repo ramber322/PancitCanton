@@ -19,6 +19,10 @@ Route::get('logout', function () {
 Route::get('/dashboard', function () {
     return view('dashboard'); })->middleware(['auth', 'verified'])->name('dashboard');
 
+    Route::get('/info', function () {
+        return view('info'); })->middleware(['auth', 'verified'])->name('info');
+    
+    
 
 route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
 
