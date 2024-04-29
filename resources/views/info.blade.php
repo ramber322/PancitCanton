@@ -5,8 +5,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 <style>
   body, html {
     margin: 0;
@@ -102,43 +100,15 @@
     margin: auto;
 	margin-top: 150px;
   }
-  
-  .popover-link {
-    font-size: 15px;
-	color: black;
-	justify-content: center;
-	font-weight: bold;
-	
-    color: inherit; /* Use the default text color */
-	
+  .info {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-
-
-
-.circular-dropdown {
-  background-image: url('https://cdn-icons-png.freepik.com/512/552/552721.png?ga=GA1.2.1745870953.1711975251&');
-  background-size: cover; /* or use 'contain' depending on how you want the image to fit */
-  width: 60px; /* Adjust the width as needed */
-  height: 60px; /* Adjust the height as needed */
-  border-radius: 50%; /* Makes the button circular */
-  border: none; /* Removes any default button border */
-  padding: 0; /* Removes extra padding */
-}
-
-.circular-dropdown.dropdown-toggle::after {
-  display: none; /* Hides the default dropdown arrow */
- 
-}
-.btn-group dropend {
-	width: 50px;
-	 margin: 200px;
-	background-image: url("https://cdn-icons-png.freepik.com/512/552/552721.png?ga=GA1.2.1745870953.1711975251&");
-	
-}
-
-.dropdown-menu.dropdown-menu-start li a:hover {
-  background-color: #E6E6FA !important; /* Change to the color you want */
+.label {
+    margin-right: 10px;
 }
 </style>
 </head>
@@ -146,69 +116,60 @@
 
 <div class="container">
 
+  
   <div class="top-section">
-  <div class="btn-group dropend">
   
-  <button type="button" class="btn btn-secondary dropdown-toggle circular-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-   
-  </button>
-  <ul class="dropdown-menu dropdown-menu-start">
-  <li><a class="dropdown-item" href="info">INFO</a></li>
-
- <li> <a class ="dropdown-item" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-    LOGOUT
-    
-</a><form id="logout-form" method="POST" action="{{ route('logout') }}" style="display: none;">
-    @csrf
-</form></li>
-
-  
-   
-  </ul>
- 
-</div>
-
-<div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-top: -50px; margin-right: 10px; ">
-  <!-- Your other content here -->
-
-  <div>{{ Auth::user()->name }}</div>
-</div>
-
-
-
-
-  
+  <div class="circle-img mx-auto mb-3" id="circle-img">
+    <a href ="{{ route('dashboard') }}"> <img src="https://cdn-icons-png.freepik.com/512/13742/13742341.png?ga=GA1.1.1730158141.1712038229&" class="img-fluid" alt="Back"> </a>
+    </div>
 	
-  <div class ="petot" style ="position: fixed; "> 
-  <img style = "width: 40px; height: 40px; margin-right: 5px; margin-bottom: 20px;" src ="https://cdn-icons-png.freepik.com/512/6897/6897755.png?ga=GA1.1.1745870953.1711975251&"> 
-  <p>500 </p>
-  </div>
+ 
   
   </div><!--ENDING TOP SECTION -->
   
   <div class="bottom-section">
     <div class="reversed-triangle"></div>
     <div class="reversed-triangle"></div>
+	
+
   </div> <!--ENDING BOT SECTION-->
 
- <div style="position: fixed; width: 200px; height: 45px;  margin-left: 60px; bottom: 90px; display: flex; justify-content: center; align-items: center; background: #36454F; border: 1px solid white;">
-    <a href="" style="text-decoration: none; color: white; font-size: 18px; cursor: pointer; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">Transaction History</a>
+
+
+<div class ="displayedpurchases" style =" position: fixed;  height: 190px; width: 280px; margin-left: 15px;
+ top: 17%; display: flex; justify-content: space-between; /* align item horizontally */
+        flex-direction: column;" >
+        
+  @yield('content')
+  <div class="info">
+    <p class="label">USERNAME:</p>
+    <p class="value">{{ Auth::user()->name }} </p>
 </div>
 
-<div class ="threedots" style ="width: 100px; position: relative; bottom: 50px; justify-content: center; left: 39%; " >
+<div class="info">
+    <p class="label">PASSWORD:</p>
+    <p class="value">*******</p>
+</div>
+<div class="info">
+    <p class="label">EMAIL:</p>
+    <p class="value">{{ Auth::user()->email }}</p> 
+</div>
+<div class="info">
+    <p class="label">ID:</p>
+    <p class="value">{{ Auth::user()->id }}</p>
+</div>
+<div class="info">
+    <p class="label">BALANCE:</p>
+    <p class="value">500</p>
+</div>
+
+  </div><!--ENDING displayedpurchases -->
+  <div class ="threedots" style ="width: 100px; position: relative; bottom: 50px; justify-content: center; left: 39%; " >
     <i class="fa fa-circle" style ="color: white;  "></i>
     <i class="fa fa-circle" style ="color: white; margin-left: 8px;" ></i>
     <i class="fa fa-circle" style ="color: white; margin-left: 8px;" ></i>
 </div>
 
-<div class ="displayedpurchases" style =" position: fixed;  height: 190px; width: 220px;margin-left: 50px;
- top: 32%; display: flex; justify-content: center; /* align item horizontally */
-        align-items: center; flex-direction: column;" >
-  
-  @yield ('content')
-  
-  
-  </div><!--ENDING displayedpurchases -->
  <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -256,38 +217,13 @@
   </div>
 </div>
   
-  
- <!-- Hidden Popover Content -->
-  <div id="popover-content" class="d-none">
-  <div class ="popoverdiv" style ="justify-content: Center; align-items: center; background: black; border: 3px solid black; width: 200px;">
 
-	 <a class="popover-link" href="">INFO</a><br>
-   <div>{{ Auth::user()->name }}</div>
-   
-  
-    
-
-	 </div>
-  </div>
-
-
-
-  
   <!-- Bootstrap JS -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <!-- Initialize Popover -->
-  <script>
-    $(document).ready(function(){
-      $('#circle-img').popover({
-        content: function() {
-          return $('#popover-content').html();
-        },
-        html: true
-      });
-    });
-  </script>
+  
 
 
 
