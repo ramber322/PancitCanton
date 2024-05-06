@@ -171,7 +171,7 @@
 <div style="display: flex; justify-content: flex-end; align-items: flex-start; margin-top: -50px; margin-right: 10px; ">
   <!-- Your other content here -->
 
-  <div>{{ Auth::user()->name }}</div>
+  <div>{{ Auth::user()->username }}</div>
 </div>
 
 
@@ -262,7 +262,7 @@
   <div class ="popoverdiv" style ="justify-content: Center; align-items: center; background: black; border: 3px solid black; width: 200px;">
 
 	 <a class="popover-link" href="">INFO</a><br>
-   <div>{{ Auth::user()->name }}</div>
+   <div>{{ Auth::user()->username }}</div>
    
   
     

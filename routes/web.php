@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CtchipsController;
+use App\Http\Controllers\UserxController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,12 +35,11 @@ Route::middleware('auth','admin')->group(function () {
     route::get('admin/products', [ProductController::class, 'index']);
     route::post('admin/products', [ProductController::class, 'store'])->name('products.store');
 
+    
+    route::get('admin/users', [UserxController::class, 'displayUsers']);
+    route::post('admin/users',[UserxController::class, 'createUser'])->name('users.createUser');
+
 });
-
-Route::get('admin/users', function () {
-    return view('admin/users');})->middleware(['auth','admin']);
-
-
 
 
 
