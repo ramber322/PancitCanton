@@ -58,7 +58,7 @@
   @foreach ($users as $user) 
   <tr>
                     
-                    <td>{{ $user->Card_ID }}</td>
+                    <td>{{ $user->id }}</td>
                     <td ><div style ="text-align:center; width: 120px;"> {{ $user->username }} </div> </td>
                     <td><div style ="text-align: center; width: 200px; ">{{ $user->email }}</div></td>
                     <td style ="margin-left: 20px;" >{{ $user->balance }}</td>
