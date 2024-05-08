@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -55,8 +55,18 @@
   
 
   <tbody>
-  @yield ('content')
-    
+  @foreach ($users as $user) 
+  <tr>
+                    
+                    <td>{{ $user->Card_ID }}</td>
+                    <td ><div style ="text-align:center; width: 120px;"> {{ $user->username }} </div> </td>
+                    <td><div style ="text-align: center; width: 200px; ">{{ $user->email }}</div></td>
+                    <td style ="margin-left: 20px;" >{{ $user->balance }}</td>
+                    <td>Delete</td>
+                  
+                 
+</tr>
+  @endforeach
   </tbody>
 </table>
 
@@ -76,34 +86,37 @@
       </div>
       <div class="modal-body">
 
-      <form action="" method="post">
-      @csrf
-  <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Username</label>
-  <input type="text" class="form-control" name="username" placeholder="">
-  </div>
+        <form action="{{ route('users.createUser') }} " method="post">
+          @csrf
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Username</label>
+            <input type="text" class="form-control" name="username" placeholder="">
+          </div>
 
-  <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Password</label>
-  <input type="password" class="form-control" name="password" placeholder="">
-  </div>
+          <div class="mb-3 position-relative">
+            <label for="exampleFormControlInput1" class="form-label">Password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" name="password" id="password" placeholder="" aria-describedby="show-password">
+              <button type="button" class="btn btn-outline-secondary toggle-password" id="show-password" data-toggle="tooltip" data-placement="top" title="Show/Hide Password">
+              <i class="fa fa-eye"></i>
+              </button>
+            </div>
+          </div>
 
-  <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Email</label>
-  <input type="text" class="form-control" name="email" placeholder="">
-  </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email</label>
+            <input type="text" class="form-control" name="email" placeholder="">
+          </div>
 
-  <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Balance</label>
-  <input type="number" class="form-control" name="balance" placeholder="Initial Balance">
-  </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Balance</label>
+            <input type="number" class="form-control" name="balance" placeholder="Initial Balance">
+          </div>
 
-  <div class="mb-3">
-  <label for="exampleFormControlInput1" class="form-label">Student ID</label>
-  <input type="text" class="form-control" name="stud_id" placeholder="2022-XXXX">
-  </div>
-
-
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Student ID</label>
+            <input type="text" class="form-control" name="stud_id" placeholder="2022-XXXX">
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -114,8 +127,20 @@
   </div>
 </div>
 
+<script>
+  // Function to toggle password visibility
+  function togglePasswordVisibility() {
+    var passwordField = document.getElementById("password");
+    if (passwordField.type === "password") {
+      passwordField.type = "text";
+    } else {
+      passwordField.type = "password";
+    }
+  }
 
-
+  // Attach event listener to the button
+  document.querySelector(".toggle-password").addEventListener("click", togglePasswordVisibility);
+</script>
 
 
 

@@ -28,23 +28,36 @@ class RegisteredUserController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request): RedirectResponse
-    {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+{
+    $request->validate([
+        'username' => ['required', 'string', 'max:255'],
+        'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:users'],
+        'balance' => 'nullable|numeric',
+        'stud_id' => 'required',
+    ]);
 
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+    // Ensure 'balance' and 'stud_id' are set to default values if they are not provided in the request
+    $balance = $request->input('balance', 0);
 
-        event(new Registered($user));
+    $user = User::create([
+        'username' => $request->username,
+        'password' => Hash::make($request->password),
+        'email' => $request->email,
+        'balance' => $balance,
+        'stud_id' => $request->stud_id,
+    ]);
 
-        Auth::login($user);
+    // Set the value of 'card_id' to be the same as 'id'
+    $user->card_id = $user->id;
+    $user->save();
 
-        return redirect(route('dashboard', absolute: false));
-    }
+    event(new Registered($user));
+
+    Auth::login($user);
+
+    // Redirect to the dashboard after successful registration
+    return redirect()->route('dashboard');
+}
+    
 }

@@ -143,7 +143,7 @@
   @yield('content')
   <div class="info">
     <p class="label">USERNAME:</p>
-    <p class="value">{{ Auth::user()->name }} </p>
+    <p class="value">{{ Auth::user()->username }} </p>
 </div>
 
 <div class="info">
