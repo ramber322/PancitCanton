@@ -1,6 +1,6 @@
 @extends('layouts.AdminDashboardLayout')
 
-
+<!--  !-->
 @section('content')
 
 @foreach($chips as $product)
