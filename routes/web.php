@@ -7,6 +7,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CtchipsController;
 use App\Http\Controllers\UserxController;
+use App\Http\Controllers\OrderLineController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,15 +30,23 @@ Route::get('/dashboard', function () {
 route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
 
 Route::middleware('auth','admin')->group(function () {
+  
+
     route::get('admin/dashboard',[DashboardController::class, 'showFoods']);
     route::get('admin/ctchips',[DashboardController::class, 'showChips']);
     route::get('admin/ctdrinks',[DashboardController::class, 'showDrinks']);
+
+
+
+
+
+    Route::post('admin/ctchips', [OrderLineController::class, 'addToCart'])->name('ctchips.addToCart');
 
     route::get('admin/products', [ProductController::class, 'index']);
     route::post('admin/products', [ProductController::class, 'store'])->name('products.store');
 
     Route::get('admin/products/delete/{Product_ID}', [ProductController::class, 'remove']);
-
+    
     
     route::get('admin/users', [UserxController::class, 'displayUsers']);
     route::post('admin/users',[UserxController::class, 'createUser'])->name('users.createUser');

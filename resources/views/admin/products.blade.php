@@ -16,3 +16,36 @@
             @endforeach
        
         @endsection
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.add-to-order').on('click', function() {
+            var productId = $(this).data('product-id');
+            var productName = $(this).data('product-name');
+            var productPrice = $(this).data('product-price');
+            addToOrder(productId, productName, productPrice);
+        });
+
+        function addToOrder(productId, productName, productPrice) {
+            $.ajax({
+                type: 'POST',
+                url: '/addToOrder', // Define your route in Laravel
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: productId,
+                    product_name: productName,
+                    product_price: productPrice
+                },
+                success: function(response) {
+                    alert('Product added to order successfully!');
+                    // You can update UI or do something else on success
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('Error adding product to order. Please try again.');
+                }
+            });
+        }
+    });
+</script>

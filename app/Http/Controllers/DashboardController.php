@@ -5,25 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Dashboard;
+use App\Models\OrderLine;
+
 
 class DashboardController extends Controller
 {
     public function showFoods()
     {
         $products = Product::where('Category', 'Foods')->get();
-        return view('admin/dashboard', compact('products'));
+        $orderedproducts = OrderLine::all();
+        return view('admin/dashboard', compact('products','orderedproducts'));
     }
 
     public function showChips() 
     {
         $chips = Product::where('Category', 'Chips')->get();
-        return view('admin/ctchips', compact('chips'));
+        $orderedproducts = OrderLine::all();
+        return view('admin/ctchips', compact('chips', 'orderedproducts'));
     }
 
     public function showDrinks() 
     {
         $drinks = Product::where('Category', 'Drinks')->get();
-        return view('admin/ctdrinks', compact('drinks'));
+        $orderedproducts = OrderLine::all();
+        return view('admin/ctdrinks', compact('drinks','orderedproducts'));
     }
 
 
@@ -31,5 +36,25 @@ class DashboardController extends Controller
     {
         return view('dashboard');
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public function showOrder() 
+    {
+        $orderedproducts = OrderLine::all();
+        return view('admin/ctchips', compact('orderedproducts'));
+    }
+
+
 
 }
