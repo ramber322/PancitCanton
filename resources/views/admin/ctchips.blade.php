@@ -27,12 +27,32 @@
 </script>
 @endsection
 
+
+
+
 @section('orderline')
+        @php
+            $totalCost = 0; 
+        @endphp
 @foreach ($orderedproducts as $orderedproduct)
 <tr>
     <td>{{ $orderedproduct->Product_Name }}</td>
     <td>{{ $orderedproduct->Price }}</td>
     <td>{{ $orderedproduct->Quantity }}</td>
 </tr>
+@php
+          
+            $subtotal = $orderedproduct->Price * $orderedproduct->Quantity;
+            $totalCost += $subtotal;
+        @endphp
 @endforeach
+@endsection
+
+
+
+
+
+
+@section('totalcost')
+<p style ="text-align:left; margin-left: 0px; ">Total Cost: ${{ $totalCost }}</p>
 @endsection

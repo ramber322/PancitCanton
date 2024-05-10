@@ -35,5 +35,17 @@ class OrderLineController extends Controller
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
 
+    public function deleteOrderline(Request $request)
+    {
+        try {
+            // Delete all records from the orderline table
+            OrderLine::truncate();
 
+            return redirect()->back()->with('success', 'All data deleted successfully!');
+        } catch (\Exception $e) {
+            // Handle any errors if necessary
+            return redirect()->back()->with('error', 'Error deleting data: ' . $e->getMessage());
+        }
+    }
+    
 }
