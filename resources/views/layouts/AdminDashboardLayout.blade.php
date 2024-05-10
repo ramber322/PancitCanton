@@ -63,7 +63,7 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- Table body content goes here -->
+       @yield('orderline')
             </tbody>
         </table>
 

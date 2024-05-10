@@ -11,3 +11,19 @@
     @endforeach
 
 @endsection
+
+
+@section('orderline')
+
+     @foreach ($orderedproducts as $orderedproduct)
+                <tr>
+                    
+                    <td>{{ $orderedproduct->Product_Name }}</td>
+                    <td>{{ $orderedproduct->Price }}</td>
+                    <td>{{ $orderedproduct->Quantity }}</td>
+                 
+                </tr>
+            @endforeach
+
+
+@endsection
