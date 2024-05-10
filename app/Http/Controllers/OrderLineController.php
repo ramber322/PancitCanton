@@ -13,19 +13,39 @@ class OrderLineController extends Controller
         return view('admin.ctchips', compact('orderedproducts'));
     }
 
-   public function addToCart(Request $request)
-{
-    // Validate the request data here if needed
+    public function addToCart(Request $request)
+    {
+        // Validate the request data here if needed
 
-    $orderedproduct = new OrderLine();
-  
-    $orderedproduct->Product_Name = $request->product_name;
-    $orderedproduct->Price = $request->product_price;
-    $orderedproduct->Quantity = 1; // You may adjust this as needed
-    $orderedproduct->Product_ID = $request->product_id; // Use the correct Product_ID from the form
-    $orderedproduct->save();
+        $existingProduct = OrderLine::where('Product_ID', $request->product_id)->first();
 
-    return redirect()->back()->with('success', 'Product added to cart successfully!');
-}
+        if ($existingProduct) {
+            // Product already exists, update the quantity
+            $existingProduct->increment('Quantity');
+        } else {
+            // Product doesn't exist, create a new entry
+            $orderedproduct = new OrderLine();
+            $orderedproduct->Product_Name = $request->product_name;
+            $orderedproduct->Price = $request->product_price;
+            $orderedproduct->Quantity = 1; // Initial quantity
+            $orderedproduct->Product_ID = $request->product_id; // Use the correct Product_ID from the form
+            $orderedproduct->save();
+        }
 
+        return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+
+    public function deleteOrderline(Request $request)
+    {
+        try {
+            // Delete all records from the orderline table
+            OrderLine::truncate();
+
+            return redirect()->back()->with('success', 'All data deleted successfully!');
+        } catch (\Exception $e) {
+            // Handle any errors if necessary
+            return redirect()->back()->with('error', 'Error deleting data: ' . $e->getMessage());
+        }
+    }
+    
 }

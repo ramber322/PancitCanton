@@ -37,7 +37,7 @@ Route::middleware('auth','admin')->group(function () {
     route::get('admin/ctdrinks',[DashboardController::class, 'showDrinks']);
 
 
-
+    Route::post('admin/ctchips', [OrderLineController::class, 'deleteOrderline'])->name('deleteOrderline');
 
 
     Route::post('admin/ctchips', [OrderLineController::class, 'addToCart'])->name('ctchips.addToCart');

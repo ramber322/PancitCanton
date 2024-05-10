@@ -62,17 +62,30 @@
                     <th scope="col">Quantity</th>
                 </tr>
             </thead>
+            <div class ="tbody" style ="display:flex; flex-wrap: wrap;">
             <tbody>
        @yield('orderline')
+       
             </tbody>
         </table>
+</div>
 
+
+    
         <div class="checkout">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ConfirmationModal" style="position: fixed; bottom: 50px; right: 80px;">
-                Purchase
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ConfirmationModal" style="position: fixed; bottom: 70px; right: 80px;">
+             Purchase
             </button>
-            <p style="color: white; text-align: center; margin-top: 4px;"><b>Purchase</b></p>
+            <p style="color: white; text-align: center; margin-top: 4px;"><b>BIWW</b></p>
         </div>
+
+        <div class="checkout" style ="text-align: left; ">
+            <button type="button" class="btn btn-primary" style="position: fixed; bottom: 5px; right: 95px;  background:blue; width: 160px; height: 40px;">
+            @yield('totalcost')
+            </button>
+           
+        </div>
+
     </div>
 </div>
 
