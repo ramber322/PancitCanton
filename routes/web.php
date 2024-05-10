@@ -35,14 +35,13 @@ Route::middleware('auth','admin')->group(function () {
     route::get('admin/products', [ProductController::class, 'index']);
     route::post('admin/products', [ProductController::class, 'store'])->name('products.store');
 
+    Route::get('admin/products/delete/{Product_ID}', [ProductController::class, 'remove']);
+
     
     route::get('admin/users', [UserxController::class, 'displayUsers']);
     route::post('admin/users',[UserxController::class, 'createUser'])->name('users.createUser');
 
 });
-
-
-
 
 
 

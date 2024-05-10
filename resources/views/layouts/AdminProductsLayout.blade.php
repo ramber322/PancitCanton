@@ -25,7 +25,7 @@
                         <a class="nav-link" href="users">Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="products.blade.php">Products</a>
+                        <a class="nav-link" href="products">Products</a>
                     </li>
                 </ul>
             </div>
@@ -43,6 +43,7 @@
       <th scope="col">Name</th>
       <th scope="col">Price</th>
       <th scope="col">Category</th>
+      <th scope="col">Action</th>
     </tr>
   </thead>
 
