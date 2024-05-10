@@ -32,4 +32,15 @@ class ProductController extends Controller
         // Redirect back to the page with a success message
         return redirect()->back()->with('success', 'Product added successfully.');
     }
+
+    public function remove($Product_ID)
+    {
+        $product = Product::find($Product_ID);
+        $product->delete();
+    
+        return redirect()->back()->with('success', 'Product deleted successfully.');
+    }
+    
+
+
 }
