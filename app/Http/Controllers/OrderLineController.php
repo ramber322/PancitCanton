@@ -47,5 +47,18 @@ class OrderLineController extends Controller
             return redirect()->back()->with('error', 'Error deleting data: ' . $e->getMessage());
         }
     }
+
+    public function deleteAllRows()
+    {
+        // Delete all rows from the orderline table
+        \App\Models\OrderLine::truncate();
+    
+        return response()->json(['message' => 'All rows deleted successfully']);
+    }
+
+
+
+
+
     
 }

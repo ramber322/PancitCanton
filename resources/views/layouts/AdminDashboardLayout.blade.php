@@ -80,11 +80,43 @@
         </div>
 
         <div class="checkout" style ="text-align: left; ">
-            <button type="button" class="btn btn-primary" style="position: fixed; bottom: 5px; right: 95px;  background:blue; width: 160px; height: 40px;">
+            <button type="button" class="btn btn-primary" style="position: fixed; bottom: 5px; right: 95px;  background:blue; width: 160px; height: 38px;">
             @yield('totalcost')
             </button>
            
         </div>
+
+
+        <div class="checkout" style="text-align: left;">
+    <button type="button" id="deleteAllRows" class="btn btn-danger" style="position: fixed; bottom: 5px; right: 10px;">
+        Clear
+    </button>
+</div>
+
+<script>
+    document.getElementById('deleteAllRows').addEventListener('click', function() {
+        if (confirm('Are you sure you want to clear all items?')) {
+            // Send AJAX request to delete all rows
+            $.ajax({
+                url: '{{ route("ctchips.deleteAllRows") }}',
+                type: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    // Reload the page or update the table as needed
+                    location.reload(); // Reload the page
+                },
+                error: function(xhr) {
+                    // Handle errors
+                    console.log(xhr.responseText);
+                }
+            });
+        }
+    });
+</script>
+
+
 
     </div>
 </div>
