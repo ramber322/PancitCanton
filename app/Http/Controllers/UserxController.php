@@ -52,7 +52,29 @@ class UserxController extends Controller
         return redirect()->back()->with('success', 'User added successfully.');
     }
 
-
+    public function validateStudent(Request $request)
+    {
+        $studentId = $request->input('student_id');
+    
+        $user = User::where('stud_id', $studentId)->first();
+    
+        if ($user) {
+            // Calculate the total cost here, I'll use a fixed value for demonstration
+            $totalCost = 8700;
+    
+            return response()->json([
+                'success' => true,
+                'user' => $user,
+                'totalCost' => $totalCost
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Student ID not found.'
+            ]);
+        }
+    }
+    
 
 
 }

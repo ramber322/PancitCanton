@@ -55,7 +55,7 @@ Route::middleware('auth','admin')->group(function () {
     route::post('admin/users',[UserxController::class, 'createUser'])->name('users.createUser');
 
 
-
+    Route::post('admin/ctchips/validateStudent', [UserxController::class, 'validateStudent'])->name('ctchips.validateStudent');
   
 
 });

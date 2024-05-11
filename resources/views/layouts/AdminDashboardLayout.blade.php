@@ -138,8 +138,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label class="form-label">Student ID:</label>
-                                <input type="text" class="form-control" name="studentid" placeholder="2020-XXXXX" id="studentid" maxlength ="10">
-
+                                <input type="text" class="form-control" name="studentid" placeholder="2020-XXXXX" id="studentid" maxlength="10">
                             </div>
                         </div>
                     </form>
@@ -164,9 +163,9 @@
                 </button>
             </div>
             <div class="modal-body">
-                <h1>Username: Moses</h1>
-                <h2>Balance: 99999999</h2>
-                <h3>Total Cost: 8700</h2>
+                <h1 id="secondModalUsername"></h1>
+                <h2 id="secondModalBalance"></h2>
+                <h3 id="secondModalTotalCost"></h3>
                 <button type="button" class="btn btn-primary" onclick="showThirdModal()">Confirm Purchase</button>
             </div>
         </div>
@@ -178,46 +177,53 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-               
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" style ="justify-content: center; align-items: center; text-align: center;" >
-               
-                <h3>Purchase Complete</h2>
-                <img style ="height: 70px; width: 70px; " src ="{{asset('assets/images/check_icon.png')}}"> 
+            <div class="modal-body" style="justify-content: center; align-items: center; text-align: center;">
+                <h3>Purchase Complete</h3>
+                <img src="{{ asset('assets/images/check_icon.png') }}" style="height: 70px; width: 70px;">
             </div>
         </div>
     </div>
 </div>
 
-
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<!-- Add this script in your AdminDashboardLayout.blade.php file -->
+
 <script>
     function showSecondModal() {
-      
-        $('#ConfirmationModal').modal('hide');
-        $('#secondModal').modal('show');
+        var studentId = document.getElementById("studentid").value;
+
+        $.ajax({
+            url: "{{ route('ctchips.validateStudent') }}",
+            type: "POST",
+            data: {
+                _token: "{{ csrf_token() }}",
+                student_id: studentId
+            },
+            success: function(response) {
+                if (response.success) {
+                    $('#ConfirmationModal').modal('hide');
+                    $('#secondModal').modal('show');
+
+                    // Display user information in second modal
+                    $('#secondModalUsername').text("Username: " + response.user.username);
+                    $('#secondModalBalance').text("Balance: " + response.user.balance);
+                    $('#secondModalTotalCost').text("Total Cost: " + response.totalCost);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(xhr) {
+                alert("Error: " + xhr.responseText);
+            }
+        });
     }
-
-    function showThirdModal() {
-       
-        $('#secondModal').modal('hide');
-        $('#thirdModal').modal('show');
-    }
-
- 
 </script>
-<script>
-var inputBox = document.getElementById("studentid");
 
-inputBox.addEventListener("input", function() {
-  inputBox.value = inputBox.value.replace(/[^\d-]|-(?=.*-)/g, "").slice(0, 10);
-});
-</script>
 </body>
 </html>
