@@ -40,8 +40,11 @@ Route::middleware('auth','admin')->group(function () {
     Route::post('admin/ctchips', [OrderLineController::class, 'deleteOrderline'])->name('deleteOrderline');
 
 
-    Route::post('admin/ctchips', [OrderLineController::class, 'addToCart'])->name('ctchips.addToCart');
 
+
+    Route::post('admin/ctchips/addToCart', [OrderLineController::class, 'addToCart'])->name('ctchips.addToCart');
+    Route::post('admin/ctchips/deleteAllRows', [OrderLineController::class, 'deleteAllRows'])->name('ctchips.deleteAllRows');
+    
     route::get('admin/products', [ProductController::class, 'index']);
     route::post('admin/products', [ProductController::class, 'store'])->name('products.store');
 
@@ -50,6 +53,10 @@ Route::middleware('auth','admin')->group(function () {
     
     route::get('admin/users', [UserxController::class, 'displayUsers']);
     route::post('admin/users',[UserxController::class, 'createUser'])->name('users.createUser');
+
+
+
+  
 
 });
 
