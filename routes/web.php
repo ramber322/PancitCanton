@@ -43,6 +43,7 @@ Route::middleware('auth','admin')->group(function () {
 
 
     Route::post('admin/ctchips/addToCart', [OrderLineController::class, 'addToCart'])->name('ctchips.addToCart');
+    Route::post('admin/ctdrinks/addToCart', [OrderLineController::class, 'addToCart'])->name('ctdrinks.addToCart');
     Route::post('admin/ctchips/deleteAllRows', [OrderLineController::class, 'deleteAllRows'])->name('ctchips.deleteAllRows');
     
     route::get('admin/products', [ProductController::class, 'index']);
