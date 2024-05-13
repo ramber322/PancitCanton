@@ -189,41 +189,71 @@
     </div>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <!-- Add this script in your AdminDashboardLayout.blade.php file -->
 
 <script>
-    function showSecondModal() {
-        var studentId = document.getElementById("studentid").value;
+   function showSecondModal() {
+    var studentId = document.getElementById("studentid").value;
 
-        $.ajax({
-            url: "{{ route('ctchips.validateStudent') }}",
-            type: "POST",
-            data: {
-                _token: "{{ csrf_token() }}",
-                student_id: studentId
-            },
-            success: function(response) {
-                if (response.success) {
-                    $('#ConfirmationModal').modal('hide');
-                    $('#secondModal').modal('show');
+    $.ajax({
+        url: "{{ route('ctchips.validateStudent') }}",
+        type: "POST",
+        data: {
+            _token: "{{ csrf_token() }}",
+            student_id: studentId
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#ConfirmationModal').modal('hide');
+                $('#secondModal').modal('show');
 
-                    // Display user information in second modal
-                    $('#secondModalUsername').text("Username: " + response.user.username);
-                    $('#secondModalBalance').text("Balance: " + response.user.balance);
-                    $('#secondModalTotalCost').text("Total Cost: " + response.totalCost);
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function(xhr) {
-                alert("Error: " + xhr.responseText);
+                // Display user information and total cost in second modal
+                $('#secondModalUsername').text("Username: " + response.user.username);
+                $('#secondModalBalance').text("Balance: " + response.user.balance);
+                $('#secondModalTotalCost').text("Total Cost: $" + response.totalCost); // Display total cost
+            } else {
+                alert(response.message);
             }
-        });
-    }
+        },
+        error: function(xhr) {
+            alert("Error: " + xhr.responseText);
+        }
+    });
+}
+function showThirdModal() {
+    // Perform purchase process
+    $.ajax({
+        url: "{{ route('ctchips.purchase') }}",
+        type: "POST",
+        data: {
+            _token: "{{ csrf_token() }}",
+            total_cost: parseFloat($('#secondModalTotalCost').text().replace('Total Cost: $', '')) // Send total cost with purchase request
+        },
+        success: function(response) {
+            if (response.success) {
+                $('#secondModal').modal('hide');
+                $('#thirdModal').modal('show');
+            } else {
+                alert(response.message);
+            }
+        },
+        error: function(xhr) {
+            alert("Error: " + xhr.responseText);
+        }
+    });
+}
+
+$('#thirdModal').on('hidden.bs.modal', function (e) {
+    window.location.reload(); // Reload the page
+});
 </script>
+
+
+
 
 </body>
 </html>

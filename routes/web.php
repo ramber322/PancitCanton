@@ -24,13 +24,13 @@ Route::get('/dashboard', function () {
 
     Route::get('/info', function () {
         return view('info'); })->middleware(['auth', 'verified'])->name('info');
-    
-    
+
+
 
 route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
 
 Route::middleware('auth','admin')->group(function () {
-  
+
 
     route::get('admin/dashboard',[DashboardController::class, 'showFoods']);
     route::get('admin/ctchips',[DashboardController::class, 'showChips']);
@@ -40,25 +40,31 @@ Route::middleware('auth','admin')->group(function () {
     Route::post('admin/ctchips', [OrderLineController::class, 'deleteOrderline'])->name('deleteOrderline');
 
 
-
+    Route::post('admin/dashboard/addToCart', [OrderLineController::class, 'addToCart'])->name('dashboard.addToCart');
 
     Route::post('admin/ctchips/addToCart', [OrderLineController::class, 'addToCart'])->name('ctchips.addToCart');
     Route::post('admin/ctdrinks/addToCart', [OrderLineController::class, 'addToCart'])->name('ctdrinks.addToCart');
     Route::post('admin/ctchips/deleteAllRows', [OrderLineController::class, 'deleteAllRows'])->name('ctchips.deleteAllRows');
-    
+
     route::get('admin/products', [ProductController::class, 'index']);
     route::post('admin/products', [ProductController::class, 'store'])->name('products.store');
 
     Route::get('admin/products/delete/{Product_ID}', [ProductController::class, 'remove']);
-    
-    
+
+
     route::get('admin/users', [UserxController::class, 'displayUsers']);
     route::post('admin/users',[UserxController::class, 'createUser'])->name('users.createUser');
 
 
     Route::post('admin/ctchips/validateStudent', [UserxController::class, 'validateStudent'])->name('ctchips.validateStudent');
-  
 
+
+
+
+
+
+    ///////////////
+    Route::post('admin/ctchips/purchase', [UserxController::class, 'purchase'])->name('ctchips.purchase');
 });
 
 
@@ -69,7 +75,7 @@ Route::middleware('auth','admin')->group(function () {
 
 
 
-                      
+
     Route::middleware('auth')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

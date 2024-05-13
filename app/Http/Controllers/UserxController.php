@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Userx;
 use App\Models\User;
-
+use App\Models\OrderLine;
 class UserxController extends Controller
 {
     public function displayUsers()
@@ -14,7 +14,7 @@ class UserxController extends Controller
         $users = User::all();
         return view('admin/users', compact('users'));
     }
-    
+
     public function createUser(Request $request)
     {
         // Validate the request data
@@ -26,7 +26,7 @@ class UserxController extends Controller
             'stud_id' => 'required',
         ]);
 
-    
+
         // Create a new product instance
         $users = new User();
         $users->username = $request->username;
@@ -39,11 +39,11 @@ class UserxController extends Controller
             $users->balance = 0;
         }
 
-       
-      
 
 
-     
+
+
+
         // Save the product to the database
         $users->save();
         $users->card_id = $users->id;
@@ -59,8 +59,19 @@ class UserxController extends Controller
         $user = User::where('stud_id', $studentId)->first();
     
         if ($user) {
-            // Calculate the total cost here, I'll use a fixed value for demonstration
-            $totalCost = 8700;
+            // Fetch all orderlines associated with the user
+            $orderLines = OrderLine::all();
+    
+            // Initialize total cost
+            $totalCost = 0;
+    
+            // Iterate through each order line and calculate total cost
+            foreach ($orderLines as $orderLine) {
+                // Calculate subtotal for each order line
+                $subtotal = $orderLine->Price * $orderLine->Quantity;
+                // Add subtotal to total cost
+                $totalCost += $subtotal;
+            }
     
             return response()->json([
                 'success' => true,
@@ -74,7 +85,19 @@ class UserxController extends Controller
             ]);
         }
     }
-    
+    public function purchase(Request $request) {
+        $user = auth()->user(); // Assuming users are authenticated
+        $totalCost = $request->input('total_cost');
 
-
+        if ($user->balance >= $totalCost) {
+            // Deduct the total cost from the user's balance
+            $user->balance -= $totalCost;
+            $user->save();
+            OrderLine::truncate();
+            return response()->json(['success' => true, 'message' => 'Purchase successful']);
+           
+        } else {
+            return response()->json(['success' => false, 'message' => 'Insufficient balance']);
+        }
+    }
 }
