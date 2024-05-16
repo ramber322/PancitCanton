@@ -55,6 +55,48 @@ class DashboardController extends Controller
         return view('admin/ctchips', compact('orderedproducts'));
     }
 
+    public function removeItem($id)
+    {
+        $orderedproducts = OrderLine::find($id);
+        $orderedproducts->delete();
+    
+        return redirect()->back()->with('success', 'Product deleted successfully.');
+    }
+
+ 
+    public function addQuantity($id)
+{
+    $orderedproduct = OrderLine::find($id);
+    
+    // Increase the quantity attribute
+    $orderedproduct->Quantity += 1;
+
+    // Save the changes
+    $orderedproduct->save();
+
+    return redirect()->back()->with('success', 'Quantity increased successfully.');
+}
+
+public function minusQuantity($id)
+{
+    $orderedproduct = OrderLine::find($id);
+    
+    // Get the current quantity
+    $currentQuantity = $orderedproduct->Quantity;
+
+    // Decrease the quantity attribute if it's greater than 1
+    if ($currentQuantity > 1) {
+        $currentQuantity -= 1;
+    }
+
+    // Update the quantity attribute
+    $orderedproduct->Quantity = $currentQuantity;
+
+    // Save the changes
+    $orderedproduct->save();
+
+    return redirect()->back()->with('success', 'Quantity decreased successfully.');
+}
 
 
 }

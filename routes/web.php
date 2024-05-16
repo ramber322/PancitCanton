@@ -58,7 +58,9 @@ Route::middleware('auth','admin')->group(function () {
 
     Route::post('admin/ctchips/validateStudent', [UserxController::class, 'validateStudent'])->name('ctchips.validateStudent');
 
-
+    Route::get('admin/ctchips/minus/{id}', [DashboardController::class, 'minusQuantity']);
+    Route::get('admin/ctchips/add/{id}', [DashboardController::class, 'addQuantity']);
+    Route::get('admin/ctchips/delete/{id}', [DashboardController::class, 'removeItem']);
 
 
 

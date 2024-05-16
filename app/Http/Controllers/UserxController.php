@@ -86,16 +86,18 @@ class UserxController extends Controller
         }
     }
     public function purchase(Request $request) {
-        $user = auth()->user(); // Assuming users are authenticated
+        $user = $request->input('user'); // Get the user passed from the JavaScript code
         $totalCost = $request->input('total_cost');
-
-        if ($user->balance >= $totalCost) {
+    
+        if ($user['balance'] >= $totalCost) {
             // Deduct the total cost from the user's balance
-            $user->balance -= $totalCost;
-            $user->save();
+            $user['balance'] -= $totalCost;
+            // Save the updated user data
+            User::where('stud_id', $user['stud_id'])->update(['balance' => $user['balance']]);
+            // Clear the order line table
             OrderLine::truncate();
+    
             return response()->json(['success' => true, 'message' => 'Purchase successful']);
-           
         } else {
             return response()->json(['success' => false, 'message' => 'Insufficient balance']);
         }

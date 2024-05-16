@@ -34,13 +34,22 @@
 
 
      @foreach ($orderedproducts as $orderedproduct)
-                <tr>
+     <tr>
+    <td>{{ $orderedproduct->Product_Name }}</td>
+    <td>{{ $orderedproduct->Price }}</td>
+    <td> <a href="{{ url('admin/ctchips/minus/' . $orderedproduct->id) }}">
+        <i class="fa fa-minus" style="font-size:15px;color:red">
+    </i>
+    </a>  {{ $orderedproduct->Quantity }} <a href="{{ url('admin/ctchips/add/' . $orderedproduct->id) }}"> <i class="fa fa-plus" style="font-size:15px;color:green"></i> </td>
+    <td>
 
-                    <td>{{ $orderedproduct->Product_Name }}</td>
-                    <td>{{ $orderedproduct->Price }}</td>
-                    <td>{{ $orderedproduct->Quantity }}</td>
-
-                </tr>
+    <a href="{{ url('admin/ctchips/delete/' . $orderedproduct->id) }}">
+        <i class="fa fa-trash-o" style="font-size:28px;color:red">
+    </i>
+    </a>
+   
+</td>
+</tr>
 
                 @php
 

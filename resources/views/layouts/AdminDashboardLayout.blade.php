@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
-   
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 
@@ -196,7 +196,8 @@
 <!-- Add this script in your AdminDashboardLayout.blade.php file -->
 
 <script>
-   function showSecondModal() {
+    let currentStudent = null; // Define currentStudent variable
+  function showSecondModal() {
     var studentId = document.getElementById("studentid").value;
 
     $.ajax({
@@ -208,6 +209,9 @@
         },
         success: function(response) {
             if (response.success) {
+                // Set currentStudent value
+                currentStudent = response.user;
+
                 $('#ConfirmationModal').modal('hide');
                 $('#secondModal').modal('show');
 
@@ -231,7 +235,8 @@ function showThirdModal() {
         type: "POST",
         data: {
             _token: "{{ csrf_token() }}",
-            total_cost: parseFloat($('#secondModalTotalCost').text().replace('Total Cost: $', '')) // Send total cost with purchase request
+            total_cost: parseFloat($('#secondModalTotalCost').text().replace('Total Cost: $', '')), // Send total cost with purchase request
+            user: currentStudent // Pass currentStudent data to the purchase method
         },
         success: function(response) {
             if (response.success) {
@@ -246,13 +251,14 @@ function showThirdModal() {
         }
     });
 }
-
 $('#thirdModal').on('hidden.bs.modal', function (e) {
     window.location.reload(); // Reload the page
 });
 </script>
 
 
+
+<!-- Your HTML code -->
 
 
 </body>
