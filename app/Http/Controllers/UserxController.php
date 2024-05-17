@@ -78,6 +78,7 @@ class UserxController extends Controller
                     $notification->Product_Name = $orderLine->Product_Name;
                     $notification->Price = $orderLine->Price;
                     $notification->Quantity = $orderLine->Quantity;
+                    $notification->user_id = $user->id;
                     $notification->save();
                 }else {
                     // Add the product name to the array to mark it as inserted
