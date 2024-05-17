@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Userx;
 use App\Models\User;
 use App\Models\OrderLine;
+use App\Models\Notification;
 class UserxController extends Controller
 {
     public function displayUsers()
@@ -58,15 +59,31 @@ class UserxController extends Controller
     
         $user = User::where('stud_id', $studentId)->first();
     
+
+       
+       
+
         if ($user) {
             // Fetch all orderlines associated with the user
             $orderLines = OrderLine::all();
-    
+            $insertedProductNames = [];
             // Initialize total cost
             $totalCost = 0;
     
             // Iterate through each order line and calculate total cost
             foreach ($orderLines as $orderLine) {
+                if (!in_array($orderLine->Product_Name, $insertedProductNames)) {
+                    // Insert a new notification if it doesn't exist
+                    $notification = new Notification();
+                    $notification->Product_Name = $orderLine->Product_Name;
+                    $notification->Price = $orderLine->Price;
+                    $notification->Quantity = $orderLine->Quantity;
+                    $notification->save();
+                }else {
+                    // Add the product name to the array to mark it as inserted
+                    $insertedProductNames[] = $orderLine->Product_Name;
+    }
+
                 // Calculate subtotal for each order line
                 $subtotal = $orderLine->Price * $orderLine->Quantity;
                 // Add subtotal to total cost
@@ -89,11 +106,18 @@ class UserxController extends Controller
         $user = $request->input('user'); // Get the user passed from the JavaScript code
         $totalCost = $request->input('total_cost');
     
+
+
         if ($user['balance'] >= $totalCost) {
             // Deduct the total cost from the user's balance
             $user['balance'] -= $totalCost;
             // Save the updated user data
             User::where('stud_id', $user['stud_id'])->update(['balance' => $user['balance']]);
+
+
+
+
+            
             // Clear the order line table
             OrderLine::truncate();
     
