@@ -102,4 +102,52 @@ class UserxController extends Controller
             return response()->json(['success' => false, 'message' => 'Insufficient balance']);
         }
     }
+
+
+    public function getUserBalance($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin/users', compact('user'));
+    }
+    
+
+    public function addBalance(Request $request, $id) {
+        $user = User::find($id);
+
+        $user->balance += $request->input('balance');
+    
+        // Find the user by ID
+       
+    
+        
+    
+        // Update the user's balance
+     
+        $user->update();
+    
+        // Return a success response
+        return response()->json(['message' => 'Balance added successfully', 'new_balance' => $user->balance]);
+    }
+
+
+
+    public function updateBalance(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'userId' => 'required|exists:users,id',
+            'balance' => 'required|numeric|min:0',
+        ]);
+
+        // Find the user
+        $user = User::findOrFail($request->input('userId'));
+
+        // Update the user's balance
+        $user->balance += $request->input('balance');
+        $user->save();
+
+        // Redirect back with a success message
+        return redirect()->back()->with('success', 'Balance updated successfully');
+    }
+
 }

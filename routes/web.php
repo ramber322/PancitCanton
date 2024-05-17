@@ -63,9 +63,12 @@ Route::middleware('auth','admin')->group(function () {
     Route::get('admin/ctchips/delete/{id}', [DashboardController::class, 'removeItem']);
 
 
-
+    Route::put('admin/users/{id}', [UserxController::class, 'addBalance']);
 
     ///////////////
+
+    Route::post('admin/users/update-balance', [UserxController::class, 'updateBalance'])->name('users.updateBalance');
+   // Route::post('/admin/users/add-balance', [UserxController::class, 'addBalance'])->name('users.add-balance');
     Route::post('admin/ctchips/purchase', [UserxController::class, 'purchase'])->name('ctchips.purchase');
 });
 

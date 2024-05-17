@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
@@ -12,6 +13,11 @@
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
 </head>
 
 <body>
@@ -55,21 +61,59 @@
   
 
   <tbody>
-  @foreach ($users as $user) 
-  <tr>
-                    
-                    <td>{{ $user->id }}</td>
-                    <td ><div style ="text-align:center; width: 120px;"> {{ $user->username }} </div> </td>
-                    <td><div style ="text-align: center; width: 200px; ">{{ $user->email }}</div></td>
-                    <td style ="margin-left: 20px;" >{{ $user->balance }}</td>
-                    <td>Delete</td>
-                  
-                 
+  @foreach ($users as $user)
+<tr>
+    <td>{{ $user->id }}</td>
+    <td><div style="text-align:center; width: 120px;">{{ $user->username }}</div></td>
+    <td><div style="text-align: center; width: 200px;">{{ $user->email }}</div></td>
+    <td style="margin-left: 20px;">{{ $user->balance }}  </td>
+    <td>
+  <button type="button" class="btn btn-primary edit-balance" data-toggle="modal" data-target="#editBalanceModal" data-userid="{{ $user->id }}">
+    Edit Balance
+  </button>
+</td>
 </tr>
-  @endforeach
+@endforeach
   </tbody>
 </table>
 
+
+
+<!-- Modal for Editing Balance -->
+<div class="modal fade" id="editBalanceModal" tabindex="-1" role="dialog" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="editBalanceModalLabel">Edit Balance</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="editBalanceForm" action="{{ route('users.updateBalance') }}" method="POST">
+          @csrf
+          <input type="hidden" id="userId" name="userId">
+          <div class="form-group">
+            <label for="balance">New Balance</label>
+            <input type="number" class="form-control" id="balance" name="balance" placeholder="Enter new balance">
+          </div>
+          <button type="submit" class="btn btn-primary">Update Balance</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    // Handle click event on edit balance button
+    $('.edit-balance').click(function() {
+      var userId = $(this).data('userid');
+      $('#userId').val(userId); // Set the user ID in the hidden input field
+      $('#balance').val(''); // Clear any previous value
+    });
+  });
+</script>
 
 <!-- Button trigger modal -->
 
@@ -127,6 +171,7 @@
   </div>
 </div>
 
+
 <script>
   // Function to toggle password visibility
   function togglePasswordVisibility() {
@@ -141,7 +186,6 @@
   // Attach event listener to the button
   document.querySelector(".toggle-password").addEventListener("click", togglePasswordVisibility);
 </script>
-
 
 
 
