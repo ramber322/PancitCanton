@@ -205,7 +205,6 @@
  top: 32%; display: flex; justify-content: center; /* align item horizontally */
         align-items: center; flex-direction: column;" >
   
-  @yield ('content')
   
   
   </div><!--ENDING displayedpurchases -->
