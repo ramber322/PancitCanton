@@ -17,6 +17,8 @@ return new class extends Migration
             $table->integer('Price');
             $table->integer('Quantity');
             $table->integer('user_id');
+            $table->integer('order_id')->nullable();
+            $table->date('purchase_date')->nullable();
             $table->timestamps();
         });
     }

@@ -1,3 +1,6 @@
+
+
+
 <?php
 
 use App\Http\Controllers\ProfileController;
@@ -25,15 +28,14 @@ Route::get('logout', function () {
         return view('info'); })->middleware(['auth', 'verified'])->name('info');
 
 
-
 route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
 
 
-Route::middleware('auth','admin')->group(function () { 
 
-    Route::get('/dashboard', function () {
-        return view('dashboard'); })->middleware(['auth', 'verified'])->name('dashboard');
-
+Route::middleware(['auth', 'verified'])->group(function () { 
+    
+    Route::get('/dashboard', [DashboardController::class, 'testindex'])->name('dashboard.testindex');
+    Route::get('dashboard/purchase-details/{id}', [DashboardController::class, 'purchaseDetails'])->name('dashboard.purchaseDetails');
 });
 
 

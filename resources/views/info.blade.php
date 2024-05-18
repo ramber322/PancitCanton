@@ -120,7 +120,7 @@
   <div class="top-section">
   
   <div class="circle-img mx-auto mb-3" id="circle-img">
-    <a href ="{{ route('dashboard') }}"> <img src="https://cdn-icons-png.freepik.com/512/13742/13742341.png?ga=GA1.1.1730158141.1712038229&" class="img-fluid" alt="Back"> </a>
+    <a href ="{{ route('dashboard.testindex') }}"> <img src="https://cdn-icons-png.freepik.com/512/13742/13742341.png?ga=GA1.1.1730158141.1712038229&" class="img-fluid" alt="Back"> </a>
     </div>
 	
  

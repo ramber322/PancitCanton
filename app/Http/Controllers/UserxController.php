@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Userx;
@@ -92,49 +95,36 @@ class UserxController extends Controller
         }
     }
     public function purchase(Request $request) {
-        $user = $request->input('user'); // Get the user passed from the JavaScript code
+        $user = $request->input('user');
         $totalCost = $request->input('total_cost');
+        $purchaseDate = Carbon::now()->toDateString();
     
-
-        
-
-
+        // Generate a unique order ID (using timestamp in this example)
+        $orderId = time();
+    
         if ($user['balance'] >= $totalCost) {
-            // Deduct the total cost from the user's balance
             $user['balance'] -= $totalCost;
-            // Save the updated user data
             User::where('stud_id', $user['stud_id'])->update(['balance' => $user['balance']]);
-
-
-            $orderLines = OrderLine::all();
-            $insertedProductNames = [];
-            // Iterate through each order line and calculate total cost
-            foreach ($orderLines as $orderLine) {
-                if (!in_array($orderLine->Product_Name, $insertedProductNames)) {
-                    // Insert a new notification if it doesn't exist
-                    $notification = new Notification();
-                    $notification->Product_Name = $orderLine->Product_Name;
-                    $notification->Price = $orderLine->Price;
-                    $notification->Quantity = $orderLine->Quantity;
-                    $notification->user_id = $user['id'];
-                    $notification->save();
-                }else {
-                    // Add the product name to the array to mark it as inserted
-                    $insertedProductNames[] = $orderLine->Product_Name;
-                }
-            }
-
-            
-            // Clear the order line table
-            OrderLine::truncate();
     
+            $orderLines = OrderLine::all();
+            foreach ($orderLines as $orderLine) {
+                $notification = new Notification();
+                $notification->Product_Name = $orderLine->Product_Name;
+                $notification->Price = $orderLine->Price;
+                $notification->Quantity = $orderLine->Quantity;
+                $notification->purchase_date = $purchaseDate;
+                $notification->user_id = $user['id'];
+                $notification->order_id = $orderId; // Associate the same order ID for all notifications
+                $notification->save();
+            }
+    
+            OrderLine::truncate();
+        
             return response()->json(['success' => true, 'message' => 'Purchase successful']);
         } else {
             return response()->json(['success' => false, 'message' => 'Insufficient balance']);
         }
     }
-
-
     public function getUserBalance($id)
     {
         $user = User::findOrFail($id);
