@@ -94,10 +94,10 @@
           @csrf
           <input type="hidden" id="userId" name="userId">
           <div class="form-group">
-            <label for="balance">New Balance</label>
+            <label for="balance">Amount</label>
             <input type="number" class="form-control" id="balance" name="balance" placeholder="Enter new balance">
           </div>
-          <button type="submit" class="btn btn-primary">Update Balance</button>
+          <button type="submit" class="btn btn-primary">Add Balance</button>
         </form>
       </div>
     </div>

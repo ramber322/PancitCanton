@@ -28,13 +28,22 @@ Route::get('logout', function () {
         return view('info'); })->middleware(['auth', 'verified'])->name('info');
 
        
+    
+           
             
 route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
 
 
 
+
 Route::middleware(['auth', 'verified'])->group(function () { 
     
+    Route::get('/balance', [UserxController::class, 'showBalanceHistory'])->name('balance.showBalanceHistory');
+    Route::get('balance/purchase-details/{id}', [UserxController::class, 'balanceDetails'])->name('balance.balanceDetails');
+
+
+
+
     Route::get('/transaction', [UserxController::class, 'showTransactHistory'])->name('transaction.showTransactHistory');
     Route::get('transaction/purchase-details/{id}', [DashboardController::class, 'purchaseDetails'])->name('transaction.purchaseDetails');
 
@@ -82,7 +91,6 @@ Route::middleware('auth','admin')->group(function () {
     Route::get('admin/ctchips/delete/{id}', [DashboardController::class, 'removeItem']);
 
 
-    Route::put('admin/users/{id}', [UserxController::class, 'addBalance']);
 
     ///////////////
 

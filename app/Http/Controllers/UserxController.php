@@ -12,6 +12,9 @@ use App\Models\Userx;
 use App\Models\User;
 use App\Models\OrderLine;
 use App\Models\Notification;
+use App\Models\NotificationBalance;
+
+
 class UserxController extends Controller
 {
     public function displayUsers()
@@ -100,13 +103,28 @@ class UserxController extends Controller
         $totalCost = $request->input('total_cost');
         $purchaseDate = Carbon::now()->toDateString();
     
-        // Generate a unique order ID (using timestamp in this example)
+        // Generate a unique order ID using timestamp 
         $orderId = time();
-    
+        $transactionId = time();
         if ($user['balance'] >= $totalCost) {
+            $oldbalance = $user['balance'];
+
+
+            $notificationbalance = new NotificationBalance();
+            $notificationbalance->amount = -$totalCost;
+            $notificationbalance->oldbalance = $oldbalance;
+            $notificationbalance->currentbalance =  $oldbalance - $totalCost;
+            $notificationbalance->user_id = $user['id'];
+            $notificationbalance->transaction_id = $transactionId;
+            $notificationbalance->save();
+
             $user['balance'] -= $totalCost;
             User::where('stud_id', $user['stud_id'])->update(['balance' => $user['balance']]);
-    
+
+            
+           
+
+
             $orderLines = OrderLine::all();
             foreach ($orderLines as $orderLine) {
                 $notification = new Notification();
@@ -126,32 +144,13 @@ class UserxController extends Controller
             return response()->json(['success' => false, 'message' => 'Insufficient balance']);
         }
     }
+
     public function getUserBalance($id)
     {
         $user = User::findOrFail($id);
         return view('admin/users', compact('user'));
     }
     
-
-    public function addBalance(Request $request, $id) {
-        $user = User::find($id);
-
-        $user->balance += $request->input('balance');
-    
-        // Find the user by ID
-       
-    
-        
-    
-        // Update the user's balance
-     
-        $user->update();
-    
-        // Return a success response
-        return response()->json(['message' => 'Balance added successfully', 'new_balance' => $user->balance]);
-    }
-
-
 
     public function updateBalance(Request $request)
     {
@@ -161,8 +160,20 @@ class UserxController extends Controller
             'balance' => 'required|numeric|min:0',
         ]);
 
+        $transactionId = time();
         // Find the user
         $user = User::findOrFail($request->input('userId'));
+        $inputbalance = $request->input('balance');
+        $oldbalance = $user->balance;
+        
+        $notificationbalance = new NotificationBalance();
+        $notificationbalance->amount = +$inputbalance;
+        $notificationbalance->oldbalance = $oldbalance;
+        $notificationbalance->currentbalance =  $oldbalance + $inputbalance;
+        $notificationbalance->user_id = $user['id'];
+        $notificationbalance->transaction_id = $transactionId;
+        $notificationbalance->save();
+
 
         // Update the user's balance
         $user->balance += $request->input('balance');
@@ -189,24 +200,7 @@ class UserxController extends Controller
     }
 
 
-    public function testindex()
-{
-    $userId = Auth::id();
-    
-    // Fetch all purchases for the authenticated user
-    $purchases = DB::table('notification')
-                 ->where('user_id', $userId)
-                 ->select('id', 'Product_Name', 'Price', 'Quantity', 'order_id', 'purchase_date', 'created_at')
-                 ->get();
-    
-    // Fetch the most recent purchase for the authenticated user
-    $latestPurchase = DB::table('notification')
-                        ->where('user_id', $userId)
-                        ->orderBy('created_at', 'desc') 
-                        ->first();
-    return view('dashboard', ['purchases' => $purchases, 'latestPurchase' => $latestPurchase]);
-}
-    
+   
     
     public function purchaseDetails($id)
     {
@@ -218,6 +212,46 @@ class UserxController extends Controller
 
 
 
+    public function showBalanceHistory()
+    {
+        $userId = Auth::id();
+        $purchases = DB::table('notificationbalance')
+                     ->where('user_id', $userId)
+                     ->select('id', 'currentbalance', 'oldbalance', 'amount', 'user_id', 'transaction_id', 'created_at')
+                     ->get();
+        
+                     $latestPurchase = DB::table('notificationbalance')
+                     ->where('user_id', $userId)
+                     ->orderBy('created_at', 'desc') 
+                     ->first();
+                return view('balance', ['purchases' => $purchases, 'latestPurchase' => $latestPurchase]);
+    }
+
+ 
+    public function balanceDetails($id)
+    {
+        $purchase = DB::table('notificationbalance')
+                     ->where('transaction_id', $id)
+                     ->first(); // Retrieve the first matching record
+        
+        if ($purchase) {
+            $data = [
+                'amount' => $purchase->amount,
+                'currentbalance' => $purchase->currentbalance,
+                'oldbalance' => $purchase->oldbalance,
+                'transaction_id' => $purchase->transaction_id,
+                'created_at' => $purchase->created_at,
+                'user_id' => $purchase->user_id
+                
+                // Add more data as needed
+            ];
+            return response()->json($data);
+           
+        } else {
+            return response()->json(['error' => 'Purchase not found'], 404);
+        }
+    }
+//new 
 
 
 

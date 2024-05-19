@@ -180,7 +180,7 @@
   
 	
   <div class ="petot" style ="position: fixed; "> 
-  <img style = "width: 40px; height: 40px; margin-right: 5px; margin-bottom: 20px;" src ="https://cdn-icons-png.freepik.com/512/6897/6897755.png?ga=GA1.1.1745870953.1711975251&"> 
+  <a href = "balance" ><img style = "width: 40px; height: 40px; margin-right: 5px; margin-bottom: 20px;" src ="https://cdn-icons-png.freepik.com/512/6897/6897755.png?ga=GA1.1.1745870953.1711975251&"></a>
   <p>{{ Auth::user()->balance }} </p>
   
   </div>
@@ -274,8 +274,9 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Purchased Items</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <h1 class="modal-title fs-5" id="exampleModalLabel" style = "font-size: 23px; ">Recent Purchase</h1>
+        
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
       </div>
      
 	  
