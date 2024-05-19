@@ -96,7 +96,7 @@
   
    .modal-content {
     width: 80%; /* Adjust this value as needed */
-    max-width: 350px; /* Adjust this value as needed */
+    max-width: 350px; /* Adjust this value as needed */ss
     margin: auto;
 	margin-top: 150px;
   }
