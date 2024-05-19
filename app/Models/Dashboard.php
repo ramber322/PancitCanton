@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Dashboard extends Model
 {
     use HasFactory;
-    protected $table = 'products'; // Name of your database table
+    protected $table = 'products'; // Name of your database tablesz
 }

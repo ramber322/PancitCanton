@@ -182,6 +182,7 @@
   <div class ="petot" style ="position: fixed; "> 
   <img style = "width: 40px; height: 40px; margin-right: 5px; margin-bottom: 20px;" src ="https://cdn-icons-png.freepik.com/512/6897/6897755.png?ga=GA1.1.1745870953.1711975251&"> 
   <p>500 </p>
+  
   </div>
   
   </div><!--ENDING TOP SECTION -->
@@ -200,14 +201,53 @@
     <i class="fa fa-circle" style ="color: white; margin-left: 8px;" ></i>
     <i class="fa fa-circle" style ="color: white; margin-left: 8px;" ></i>
 </div>
+<script>
+ function purchaseDetails(orderId) {
+        // AJAX request to fetch details of the purchase
+        $.ajax({
+            url: '/dashboard/purchase-details/' + orderId,
+            type: 'GET',
+            success: function(response) {
+                // Display details in modal
+                $('#exampleModal').modal('show');
+                $('#purchaseDetails').empty(); // Clear previous details
+                response.forEach(function(purchase) {
+                    // Append purchased items to modal body
+                    $('#purchaseDetails').append('<div style="display: flex; justify-content: space-between;"><p>' + purchase.Product_Name + '</p><p>$' + purchase.Price + '</p></div>');
+                });
+            },
+            error: function(xhr) {
+                console.error("ERROR");
+            }
+        });
+    }
+</script>
 
-<div class ="displayedpurchases" style =" position: fixed;  height: 190px; width: 220px;margin-left: 50px;
- top: 32%; display: flex; justify-content: center; /* align item horizontally */
-        align-items: center; flex-direction: column;" >
-  
-  
-  
-  </div><!--ENDING displayedpurchases -->
+
+
+
+
+<div class="displayedpurchases" style="position: fixed; height: 190px; width: 220px; margin-left: 50px; top: 32%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    @php
+        $uniqueOrders = [];
+    @endphp
+
+    @foreach($purchases as $purchase)
+        @if (!in_array($purchase->order_id, $uniqueOrders))
+            <button onclick="purchaseDetails({{ $purchase->order_id }})">
+                Order ID: {{ $purchase->purchase_date }}
+            </button>
+            @php
+                $uniqueOrders[] = $purchase->order_id;
+            @endphp
+        @endif
+    @endforeach
+</div>
+
+
+
+
+
  <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -216,40 +256,17 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Purchased Items</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="purchaseDetails">
 	  
 	  
-	<div style="display: flex; justify-content: space-between;">
-    <p>Coke</p>
-    <p>20</p>
+      @foreach($purchases as $purchase)
+    <div style="display: flex; justify-content: space-between;">
+        <p>{{ $purchase->Product_Name }}</p>
+        <p>${{ $purchase->Price }}</p>
     </div>
+    @endforeach
 	
-	<div style="display: flex; justify-content: space-between;">
-    <p>Spaghetti</p>
-    <p>75</p>
-    </div>
 	
-	<div style="display: flex; justify-content: space-between;">
-    <p>Cobra</p>
-    <p>25</p>
-    </div>
-	
-	<div style="display: flex; justify-content: space-between;">
-    <p>Tempura</p>
-    <p>30</p>
-    </div>
-	 
-	 
-	 
-	 <hr>  
-	 <div style="display: flex; justify-content: space-between;">
-    <h1>Total</h1>
-    <h1>150</h1>
-    </div>
-	 
-
-
-      </div>
       
     </div>
   </div>

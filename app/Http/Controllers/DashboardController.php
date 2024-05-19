@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+//newly added
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Dashboard;
 use App\Models\OrderLine;
-
+use App\Models\Notification;
 
 class DashboardController extends Controller
 {
@@ -96,6 +100,39 @@ public function minusQuantity($id)
     $orderedproduct->save();
 
     return redirect()->back()->with('success', 'Quantity decreased successfully.');
+}
+
+
+
+
+public function testindex()
+{
+    $userId = Auth::id();
+    $purchases = DB::table('notification')
+                 ->where('user_id', $userId)
+                 ->select('id', 'Product_Name', 'Price', 'Quantity', 'order_id','user_id','purchase_date') // Include 'order_id'
+                 ->get();
+    return view('dashboard', ['purchases' => $purchases]);
+}
+
+
+public function purchaseDetails($id)
+{
+    $purchases = DB::table('notification')
+                 ->where('order_id', $id)
+                 ->get();
+    return response()->json($purchases);
+}
+//new
+
+
+public function getTodayProducts()
+{
+    $userId = Auth::id();
+    $todayProducts = Notification::where('user_id', $userId)
+                        ->whereDate('purchase_date', Carbon::today())
+                        ->get(['Product_Name', 'Price', 'Quantity']);
+    return response()->json($todayProducts);
 }
 
 
