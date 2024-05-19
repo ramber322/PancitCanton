@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -170,5 +171,54 @@ class UserxController extends Controller
         // Redirect back with a success message
         return redirect()->back()->with('success', 'Balance updated successfully');
     }
+
+
+    public function showTransactHistory()
+    {
+        $userId = Auth::id();
+        $purchases = DB::table('notification')
+                     ->where('user_id', $userId)
+                     ->select('id', 'Product_Name', 'Price', 'Quantity', 'order_id', 'purchase_date', 'created_at')
+                     ->get();
+        
+                     $latestPurchase = DB::table('notification')
+                     ->where('user_id', $userId)
+                     ->orderBy('created_at', 'desc') 
+                     ->first();
+                return view('transaction', ['purchases' => $purchases, 'latestPurchase' => $latestPurchase]);
+    }
+
+
+    public function testindex()
+{
+    $userId = Auth::id();
+    
+    // Fetch all purchases for the authenticated user
+    $purchases = DB::table('notification')
+                 ->where('user_id', $userId)
+                 ->select('id', 'Product_Name', 'Price', 'Quantity', 'order_id', 'purchase_date', 'created_at')
+                 ->get();
+    
+    // Fetch the most recent purchase for the authenticated user
+    $latestPurchase = DB::table('notification')
+                        ->where('user_id', $userId)
+                        ->orderBy('created_at', 'desc') 
+                        ->first();
+    return view('dashboard', ['purchases' => $purchases, 'latestPurchase' => $latestPurchase]);
+}
+    
+    
+    public function purchaseDetails($id)
+    {
+        $purchases = DB::table('notification')
+                     ->where('order_id', $id)
+                     ->get();
+        return response()->json($purchases);
+    }
+
+
+
+
+
 
 }

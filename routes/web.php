@@ -27,13 +27,20 @@ Route::get('logout', function () {
     Route::get('/info', function () {
         return view('info'); })->middleware(['auth', 'verified'])->name('info');
 
-
+       
+            
 route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
 
 
 
 Route::middleware(['auth', 'verified'])->group(function () { 
     
+    Route::get('/transaction', [UserxController::class, 'showTransactHistory'])->name('transaction.showTransactHistory');
+    Route::get('transaction/purchase-details/{id}', [DashboardController::class, 'purchaseDetails'])->name('transaction.purchaseDetails');
+
+
+
+
     Route::get('/dashboard', [DashboardController::class, 'testindex'])->name('dashboard.testindex');
     Route::get('dashboard/purchase-details/{id}', [DashboardController::class, 'purchaseDetails'])->name('dashboard.purchaseDetails');
 });
