@@ -108,13 +108,20 @@ public function minusQuantity($id)
 public function testindex()
 {
     $userId = Auth::id();
+    
+    // Fetch all purchases for the authenticated user
     $purchases = DB::table('notification')
                  ->where('user_id', $userId)
-                 ->select('id', 'Product_Name', 'Price', 'Quantity', 'order_id','user_id','purchase_date') // Include 'order_id'
+                 ->select('id', 'Product_Name', 'Price', 'Quantity', 'order_id', 'purchase_date', 'created_at')
                  ->get();
-    return view('dashboard', ['purchases' => $purchases]);
+    
+    // Fetch the most recent purchase for the authenticated user
+    $latestPurchase = DB::table('notification')
+                        ->where('user_id', $userId)
+                        ->orderBy('created_at', 'desc') 
+                        ->first();
+    return view('dashboard', ['purchases' => $purchases, 'latestPurchase' => $latestPurchase]);
 }
-
 
 public function purchaseDetails($id)
 {

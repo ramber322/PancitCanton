@@ -241,22 +241,30 @@
 <div class="displayedpurchases" style="position: fixed; height: 190px; width: 220px; margin-left: 50px; top: 32%; display: flex; justify-content: center; align-items: center; flex-direction: column;">
     @php
         $uniqueOrders = [];
+        $count = 0; // Initialize loop counter
     @endphp
 
-    @foreach($purchases as $purchase)
+    <!-- Loop through the purchases in reverse order -->
+    @foreach($purchases->reverse() as $purchase)
         @if (!in_array($purchase->order_id, $uniqueOrders))
-        <div class ="purchasenotify" style="margin-bottom: 10px;">
-            <button class="btn btn-primary" onclick="purchaseDetails({{ $purchase->order_id }})"   style ="width: 200px; background: #36454F; border-radius: 100px; " >
-                 Purchase {{ $purchase->purchase_date }}
+        <div class="purchasenotify" style="margin-bottom: 10px;">
+            <button class="btn btn-primary" onclick="purchaseDetails({{ $purchase->order_id }})" style="width: 200px; background: #36454F; border-radius: 100px;">
+                purchase {{ $purchase->purchase_date }}
             </button>
-            </div>
-            @php
-                $uniqueOrders[] = $purchase->order_id;
-            @endphp
+        </div>
+        <!-- Increment loop counter -->
+        @php
+            $uniqueOrders[] = $purchase->order_id;
+            $count++;
+        @endphp
+
+        <!-- Break the loop if 3 rows are displayed -->
+        @if($count == 3)
+            @break
+        @endif
         @endif
     @endforeach
 </div>
-
 
 
 
