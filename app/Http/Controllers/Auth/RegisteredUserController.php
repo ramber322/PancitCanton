@@ -57,7 +57,7 @@ class RegisteredUserController extends Controller
     Auth::login($user);
 
     // Redirect to the dashboard after successful registration
-    return redirect()->route('dashboard');
+    return redirect()->route('dashboard.testindex');
 }
     
 }
