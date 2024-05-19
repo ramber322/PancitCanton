@@ -202,7 +202,7 @@
     <i class="fa fa-circle" style ="color: white; margin-left: 8px;" ></i>
 </div>
 <script>
- function purchaseDetails(orderId) {
+    function purchaseDetails(orderId) {
         // AJAX request to fetch details of the purchase
         $.ajax({
             url: '/dashboard/purchase-details/' + orderId,
@@ -211,10 +211,21 @@
                 // Display details in modal
                 $('#exampleModal').modal('show');
                 $('#purchaseDetails').empty(); // Clear previous details
+                
+                // Variable to hold the total price
+                var totalPrice = 0;
+
                 response.forEach(function(purchase) {
-                    // Append purchased items to modal body
-                    $('#purchaseDetails').append('<div style="display: flex; justify-content: space-between;"><p>' + purchase.Product_Name + '</p><p>$' + purchase.Price + '</p></div>');
+                    // Calculate the total price for the current purchase
+                    var purchaseTotal = purchase.Price * purchase.Quantity;
+                    // Append table row for the current purchase
+                    $('#purchaseDetails').append('<tr><td style="height: 30px; line-height: 15px; overflow: hidden;">' + purchase.Product_Name + ' <p style="margin: 0; font-size: 15px; position:relative; top: 6px;">' + purchase.Price + ' x ' + purchase.Quantity + '</p></td><td style ="padding-left: 60px; " >' + purchase.Price + '</td><td style = "text-align: right;" >$' + purchaseTotal + '</td></tr>');
+                    // Add the current purchase's total to the total price
+                    totalPrice += purchaseTotal;
                 });
+
+                // Append a row for the total price
+                $('#purchaseDetails').append('<tr><td></td>><td  style="padding-left: 55px;font-weight: bold; font-size: 20px; ">Total:</td><td style ="text-align: right; font-weight: bold; font-size: 20px; " >$' + totalPrice + '</td></tr>');
             },
             error: function(xhr) {
                 console.error("ERROR");
@@ -234,9 +245,11 @@
 
     @foreach($purchases as $purchase)
         @if (!in_array($purchase->order_id, $uniqueOrders))
-            <button onclick="purchaseDetails({{ $purchase->order_id }})">
-                Order ID: {{ $purchase->purchase_date }}
+        <div class ="purchasenotify" style="margin-bottom: 10px;">
+            <button class="btn btn-primary" onclick="purchaseDetails({{ $purchase->order_id }})"   style ="width: 200px; background: #36454F; border-radius: 100px; " >
+                 Purchase {{ $purchase->purchase_date }}
             </button>
+            </div>
             @php
                 $uniqueOrders[] = $purchase->order_id;
             @endphp
@@ -256,21 +269,36 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Purchased Items</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" id="purchaseDetails">
+     
 	  
 	  
-      @foreach($purchases as $purchase)
-    <div style="display: flex; justify-content: space-between;">
-        <p>{{ $purchase->Product_Name }}</p>
-        <p>${{ $purchase->Price }}</p>
-    </div>
+    
+      <table class="table">
+    <thead>
+        <tr>
+            <th scope="col" >Product</th>
+            <th scope="col" style="padding-left: 55px;">Price</th>
+            <th scope="col" class="text-right">Sub Total</th>
+        </tr>
+    </thead>
+  <tbody id="purchaseDetails" >
+  @foreach($purchases as $purchase)
+    <tr>
+      <td>FOOD </td>
+      <td>2 </td>
+      <td>400 </td>
+    </tr>
     @endforeach
+   
+  </tbody>
+</table>
+  
 	
 	
       
     </div>
   </div>
-</div>
+
   
   
  <!-- Hidden Popover Content -->
