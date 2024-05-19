@@ -160,7 +160,7 @@
 </div>
 <div class="info">
     <p class="label">BALANCE:</p>
-    <p class="value">500</p>
+    <p class="value">{{ Auth::user()->balance }}</p>
 </div>
 
   </div><!--ENDING displayedpurchases -->
