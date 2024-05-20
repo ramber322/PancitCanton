@@ -36,16 +36,19 @@
         @endphp
 @foreach ($orderedproducts as $orderedproduct)
 <tr>
-    <td>{{ $orderedproduct->Product_Name }}</td>
+    <td style = "  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90px;" >{{ $orderedproduct->Product_Name }}</td>
     <td>{{ $orderedproduct->Price }}</td>
-    <td> <a href="{{ url('admin/ctchips/minus/' . $orderedproduct->id) }}">
-        <i class="fa fa-minus" style="font-size:15px;color:red">
+    <td style = "font-size: 15px; " > <a href="{{ url('admin/ctchips/minus/' . $orderedproduct->id) }}">
+        <i class="fa fa-minus" style="font-size:12px;color:red">
     </i>
-    </a>  {{ $orderedproduct->Quantity }} <a href="{{ url('admin/ctchips/add/' . $orderedproduct->id) }}"> <i class="fa fa-plus" style="font-size:15px;color:green"></i> </td>
+    </a>  {{ $orderedproduct->Quantity }} <a href="{{ url('admin/ctchips/add/' . $orderedproduct->id) }}"> <i class="fa fa-plus" style="font-size:12px;color:green"></i> </td>
     <td>
 
     <a href="{{ url('admin/ctchips/delete/' . $orderedproduct->id) }}">
-        <i class="fa fa-trash-o" style="font-size:28px;color:red">
+        <i class="fa fa-trash-o" style="font-size:25px;color:red">
     </i>
     </a>
    
