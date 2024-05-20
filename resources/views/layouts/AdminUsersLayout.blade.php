@@ -69,7 +69,7 @@
     <td style="margin-left: 20px;">{{ $user->balance }}  </td>
     <td>
   <button type="button" class="btn btn-primary edit-balance" data-toggle="modal" data-target="#editBalanceModal" data-userid="{{ $user->id }}">
-    Edit Balance
+    Add Balance
   </button>
 </td>
 </tr>
@@ -83,26 +83,47 @@
 <div class="modal fade" id="editBalanceModal" tabindex="-1" role="dialog" aria-labelledby="editBalanceModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editBalanceModalLabel">Edit Balance</h5>
+      <div class="modal-header" >
+        <h5 class="modal-title" id="editBalanceModalLabel" style = "font-size: 20px; ">Add Money</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form id="editBalanceForm" action="{{ route('users.updateBalance') }}" method="POST">
-          @csrf
-          <input type="hidden" id="userId" name="userId">
-          <div class="form-group">
-            <label for="balance">Amount</label>
-            <input type="number" class="form-control" id="balance" name="balance" placeholder="Enter new balance">
-          </div>
-          <button type="submit" class="btn btn-primary">Add Balance</button>
-        </form>
+  <form id="editBalanceForm" action="{{ route('users.updateBalance') }}" method="POST">
+    @csrf
+    <input type="hidden" id="userId" name="userId">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" style = "width: 120px; background: 	#89CFF0	; font-weight: bold; " >Amount</span>
       </div>
+      <input type="number" class="form-control" id="balance" name="balance" placeholder="Enter Amount">
+    </div>
+    <div class="row justify-content-end">
+      <div class="col-auto">
+        <button type="submit" id="submitButton" class="btn btn-primary">Add Balance</button>
+      </div>
+    </div>
+  </form>
+</div>
     </div>
   </div>
 </div>
+
+<script>
+  // Get input field and button elements
+  const balanceInput = document.getElementById('balance');
+  const submitButton = document.getElementById('submitButton');
+
+  // Add event listener to input field
+  balanceInput.addEventListener('input', function() {
+    // Get the value entered in the input field
+    const balanceValue = this.value;
+
+    // Update the text of the button with the entered value
+    submitButton.innerText = `Add ₱${balanceValue}`;
+  });
+</script>
 
 <script>
   $(document).ready(function() {

@@ -94,12 +94,25 @@
     cursor: pointer; /* Change cursor to pointer on hover */
   }
   
-   .modal-content {
-    width: 80%; /* Adjust this value as needed */
-    max-width: 350px; /* Adjust this value as needed */ss
+   .modal-content { 
+    width: 80%;
+    max-width: 350px; 
     margin: auto;
 	margin-top: 150px;
   }
+
+  .purchasenotify {
+      margin-bottom: 10px;
+    }
+
+    .purchasenotify button {
+      width: 200px;
+      background: #36454F;
+      border-radius: 100px;
+    }
+
+
+  
 </style>
 </head>
 <body>
@@ -114,7 +127,7 @@
     </div>
 	
  
-  
+    <h1 style = "font-size: 25px; text-align: center;" >Account Transaction </h1>
   </div><!--ENDING TOP SECTION -->
   
   <div class="bottom-section">
@@ -187,15 +200,40 @@
 </script>
 
 
-<div class ="displayedpurchases" style =" position: fixed;  height: 190px; width: 220px;margin-left: 50px;
- top: 32%; display: flex; justify-content: center; /* align item horizontally */
-        align-items: center; flex-direction: column;" >
+<div class ="displayedpurchases" style =" position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      max-height: 60%; /* Adjust maximum height as needed */
+      overflow-y: auto;
+      width: 220px;
+     
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      
+      background: rgba(26, 63, 102, 0);
+border-radius: 16px;
+
+
+border: 1px solid rgba(26, 63, 102, 1);
+/* From https://css.glass */
+background: rgba(26, 63, 102, 0);
+border-radius: 16px;
+
+
+-webkit-backdrop-filter: blur(1.4px);
+border: 1px solid rgba(26, 63, 102, 1);
+
+      
+      " >
   
   
     @foreach($purchases->reverse() as $purchase)
      
         <div class="purchasenotify" style="margin-bottom: 10px;">
-        <button class="btn btn-primary" onclick="balanceDetails({{ $purchase->transaction_id }})" style="width: 200px; background: #36454F; border-radius: 100px;">
+        <button class="btn btn-primary" onclick="balanceDetails({{ $purchase->transaction_id }})" >
                 new balance: {{ $purchase->currentbalance }}
             </button>
         </div>    

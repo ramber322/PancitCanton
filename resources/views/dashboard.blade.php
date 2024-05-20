@@ -94,6 +94,7 @@
     transform: scale(1.1); /* Increase the size on hover */
     transition: transform 0.3s ease; /* Add smooth transition */
     cursor: pointer; /* Change cursor to pointer on hover */
+   
   }
   
    .modal-content {
@@ -139,6 +140,33 @@
 
 .dropdown-menu.dropdown-menu-start li a:hover {
   background-color: #E6E6FA !important; /* Change to the color you want */
+}
+
+
+.purchasenotify {
+      margin-bottom: 10px;
+    }
+
+    .purchasenotify button {
+      width: 200px;
+      background: #36454F;
+      border-radius: 100px;
+    }
+
+    .purchase-link {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.purchase-link:hover {
+    color: 	#89CFF0	;
 }
 </style>
 </head>
@@ -192,9 +220,10 @@
     <div class="reversed-triangle"></div>
   </div> <!--ENDING BOT SECTION-->
 
- <div style="position: fixed; width: 200px; height: 45px;  margin-left: 60px; bottom: 90px; display: flex; justify-content: center; align-items: center; background: #36454F; border: 1px solid white;">
-    <a href="transaction" style="text-decoration: none; color: white; font-size: 18px; cursor: pointer; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center;">Transaction History</a>
+  <div style="position: fixed; width: 200px; height: 45px; margin-left: 60px; bottom: 90px; display: flex; justify-content: center; align-items: center; background: #36454F; border: 1px solid white;">
+    <a href="transaction" class="purchase-link">Purchase History</a>
 </div>
+
 
 <div class ="threedots" style ="width: 100px; position: relative; bottom: 50px; justify-content: center; left: 39%; " >
     <i class="fa fa-circle" style ="color: white;  "></i>
@@ -248,7 +277,7 @@
     @foreach($purchases->reverse() as $purchase)
         @if (!in_array($purchase->order_id, $uniqueOrders))
         <div class="purchasenotify" style="margin-bottom: 10px;">
-            <button class="btn btn-primary" onclick="purchaseDetails({{ $purchase->order_id }})" style="width: 200px; background: #36454F; border-radius: 100px;">
+            <button class="btn btn-primary" onclick="purchaseDetails({{ $purchase->order_id }})" >
                 purchase {{ $purchase->purchase_date }}
             </button>
         </div>
