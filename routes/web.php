@@ -11,7 +11,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CtchipsController;
 use App\Http\Controllers\UserxController;
 use App\Http\Controllers\OrderLineController;
-
+use App\Http\Controllers\SalesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,16 +28,22 @@ Route::get('logout', function () {
         return view('info'); })->middleware(['auth', 'verified'])->name('info');
 
        
-    
+ 
            
-            
-route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
+    route::get('admin/testad',[SalesController::class, 'index'])->middleware(['auth','admin'])->name('testad.index');
+    route::get('admin/admin/testad/purchase-details/{id}',[SalesController::class, 'purchaseDetails'])->middleware(['auth','admin'])->name('testad.purchaseDetails');
 
+
+route::get('admin/dashboard',[HomeController::class, 'index'])->middleware(['auth','admin']);
 
 
 
 Route::middleware(['auth', 'verified'])->group(function () { 
     
+
+
+
+
     Route::get('/balance', [UserxController::class, 'showBalanceHistory'])->name('balance.showBalanceHistory');
     Route::get('balance/purchase-details/{id}', [UserxController::class, 'balanceDetails'])->name('balance.balanceDetails');
 
@@ -58,7 +64,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 Route::middleware('auth','admin')->group(function () {
+    
 
+       
 
     route::get('admin/dashboard',[DashboardController::class, 'showFoods']);
     route::get('admin/ctchips',[DashboardController::class, 'showChips']);
