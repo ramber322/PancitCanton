@@ -25,6 +25,12 @@
 
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/sb-admin-2.min.css') }}">
+ <style>
+    .hover-row:hover {
+        background-color: #f5f5f5; /* Change to your desired hover background color */
+        cursor: pointer; /* Change cursor style on hover */
+    }
+</style>
 </head>
 
 <body id="page-top">
@@ -233,7 +239,7 @@
             return $item->Price * $item->Quantity;
             });
             @endphp
-            <tr>
+            <tr class = "hover-row">
                 <td>{{ $purchase->order_id }}</td>
                 <td>{{ $purchase->purchase_date }}</td>
                 <td>+{{ $totalEarnings }}</td>
