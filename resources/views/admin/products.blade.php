@@ -9,7 +9,7 @@
                     <td>{{ $product->Price }}</td>
                     <td>{{ $product->Category }}</td>
                     <td>
-                    <a href="{{ url('admin/products/delete/' . $product->Product_ID) }}">Delete</a>
+                    <a href="{{ url('admin/products/delete/' . $product->Product_ID) }}"><img style = "width: 23px; height: 23px; " src = "https://cdn-icons-png.freepik.com/512/6861/6861362.png?ga=GA1.1.2048724760.1716480993"> </a>
                     </td>
                  
                 </tr>
