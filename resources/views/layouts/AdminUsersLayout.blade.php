@@ -34,6 +34,16 @@
                     <li class="nav-item">
                         <a class="nav-link" href="products">Products</a>
                     </li>
+                    <li class="nav-item">
+    <a class="nav-link" href="testad">
+        Sales 
+    </a>
+</li>
+
+<img style = "height: 20px; width: 20px; margin-top: 12px; margin-left: -0px;  "src ="https://cdn-icons-png.freepik.com/512/161/161229.png?ga=GA1.1.2048724760.1716480993"> 
+                <li>
+
+            </li>
                 </ul>
             </div>
         </div>

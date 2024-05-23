@@ -15,22 +15,34 @@
     </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="dashboard">Menu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="users">Users</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="products">Products</a>
-                    </li>
-                </ul>
-            </div>
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="dashboard">Menu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="users">Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="testad">Sales   </a>
+                    
+                </li>
+                
+                <img style = "height: 20px; width: 20px; margin-top: 12px; margin-left: -8px;  "src ="https://cdn-icons-png.freepik.com/512/161/161229.png?ga=GA1.1.2048724760.1716480993"> 
+                <li>
+
+</li>
+              </ul>
         </div>
-    </nav>
+    </div>
+
+
+</nav>
+
 
     <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter"style ="float: right; background: black; color: white;">

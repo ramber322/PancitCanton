@@ -15,6 +15,7 @@ class SalesController extends Controller
     {
         // Fetch data from the Notification table
         $notifications = Notification::all();
+        $products = Product::all();
 
         // Calculate total sales
         $totalSales = $notifications->sum(function ($notification) {
@@ -34,7 +35,7 @@ class SalesController extends Controller
         ->get();
 
         // Pass both total sales and registered users count to the view
-        return view('admin.testad', compact('totalSales', 'registeredUsersCount','totalProducts','purchases'));
+        return view('admin.testad', compact('totalSales', 'registeredUsersCount','totalProducts','purchases','products'));
     }
 
     public function totalUsers()

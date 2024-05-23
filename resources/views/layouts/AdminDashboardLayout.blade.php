@@ -18,13 +18,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Menu</a>
+                    <a class="nav-link active" aria-current="page" href="">Menu</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="users">Users</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="products">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="testad">Sales  <img style = "height: 20px; width: 20px; "src ="https://cdn-icons-png.freepik.com/512/161/161229.png?ga=GA1.1.2048724760.1716480993"> </a>
                 </li>
             </ul>
         </div>
