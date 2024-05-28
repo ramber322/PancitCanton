@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Notification;
+use App\Models\NotificationBalance;
 use App\Models\User;
 use App\Models\Product;
 
@@ -15,6 +16,7 @@ class SalesController extends Controller
     {
         // Fetch data from the Notification table
         $notifications = Notification::all();
+        $notificationsbalance = NotificationBalance::all();
         $products = Product::all();
 
         // Calculate total sales
@@ -35,7 +37,7 @@ class SalesController extends Controller
         ->get();
 
         // Pass both total sales and registered users count to the view
-        return view('admin.testad', compact('totalSales', 'registeredUsersCount','totalProducts','purchases','products'));
+        return view('admin.testad', compact('totalSales', 'registeredUsersCount','totalProducts','purchases','products','notificationsbalance'));
     }
 
     public function totalUsers()

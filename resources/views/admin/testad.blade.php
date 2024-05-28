@@ -202,12 +202,6 @@ color: white
                                     <h6 class="m-0 font-weight-bold text-primary" style ="color: white !important;  ">Sales Report</h6>
                                     <div class="dropdown no-arrow">
                                       
-
-
-
-
-
-                                    
                                         
                                     </div>
                                 </div>
@@ -360,9 +354,70 @@ color: white
                         </div>
                     </div>
 
+<!-- BOTTOM DIV !-->
+
+<div class="card-header py-3 d-flex flex-row align-items-center justify-content-between" style = "background:white;">
+                                    <h6 class="m-0 font-weight-bold text-primary" style ="color: black !important;  ">Account Transaction</h6>
+                    <div class="card-body">
+    <div style="max-height: 60vh; overflow-y: auto;">
+    <table class="table" >
+        <thead>
+            <tr style = "background: rgb(53, 38, 87); color: white;">
+                <th scope="col">Transact_ID</th>
+                <th scope="col">User Balance</th>
+                <th scope="col">Amount</th>
+                <th scope="col">Username</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($notificationsbalance->reverse() as $notificationbalance)
+            <tr class = "hover-row">
+                <td>{{ $notificationbalance->transaction_id }}</td>
+                <td>{{ $notificationbalance->oldbalance }}</td>
+                <?php
+                $amount = $notificationbalance->amount;
+                ?>
+
+                @if ($amount > 0)
+                <td> +{{ $amount }} </td>
+                @else
+                <td> {{ $amount }} </td>
+                @endif
+                 
+                
+
+        <?php
+        $user = App\Models\User::find($notificationbalance->user_id);
+        ?>
+        @if($user)
+          <td>  {{ $user->username }} </td>
+        @else
+            User does not exist
+        @endif
+    </td>
+
+            </tr>
+            <!-- Increment loop counter -->
+           
+            @endforeach
+        </tbody>
+    </table>
+</div>
+        </div>
+
+        </div>
+
+
+                            </div>
+                        </div>
                 </div>
                 <!-- /.container-fluid -->
 
+
+
+
+
+                
             </div>
             <!-- End of Main Content -->
 
